@@ -119,14 +119,13 @@ h6 {
   padding: 0;
   margin: 0;
   max-height: 60px;
-  width: 60px;
+  width: 80%;
   aspect-ratio: 3/2;
   object-fit: contain;
-
 }
 .footer-logo {
-  height: 60px;
-  width: 60px;
+  
+  width: 60%;
   aspect-ratio: 3/2;
   object-fit: cover;
 }
@@ -738,7 +737,7 @@ section {
 }
 
 .services .icon-box:hover::before {
-  background: #a8f0bd;
+  background: #ff7777;
   top: 0;
   border-radius: 0px;
 }
@@ -750,7 +749,7 @@ section {
 .services .icon i {
   font-size: 48px;
   line-height: 1;
-  color: #75ef97;
+  color: #eb3510;
   transition: all 0.3s ease-in-out;
 }
 
@@ -949,7 +948,7 @@ section {
 }
 
 .portfolio .portfolio-wrap .portfolio-links a:hover {
-  background: #75ef97;
+  background: #ff5b5b;
 }
 
 .portfolio .portfolio-wrap .portfolio-links a+a {
@@ -1325,7 +1324,7 @@ section {
 }
 
 .contact .php-email-form button[type=submit]:hover {
-  background: #75ef97;
+  background: #f44e4e;
 }
 
 @keyframes animate-loading {
