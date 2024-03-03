@@ -1,1 +1,6 @@
 venv/
+home/__pycache__/
+search/__pycache__/
+home/migrations/__pycache__/
+kinslee/__pycache__/
+kinslee/settings/__pycache__/
