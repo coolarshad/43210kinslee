@@ -7,6 +7,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail import blocks,forms
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.blocks import RichTextBlock
+from wagtail.blocks import StructBlock, RichTextBlock, URLBlock
 
 # from .blocks import *
 from wagtail.snippets.models import register_snippet
@@ -38,6 +39,8 @@ class HomePage(Page):
         context['missionvision']=VisionMission.objects.first()
         context['productspecification']=ProductSpecification.objects.all()
         context['productdatasheet']=ProductSafetyDataSheet.objects.all()
+        context['controllubricants']=ControlImages.objects.all()
+        context['royallubricants']=RoyalImages.objects.all()
 
         return context
 
@@ -175,6 +178,46 @@ class DataSheetSecondMenu(Page):
         FieldPanel('is_file'),
     ]
 
+
+
+class ProductPage(Page):
+    name = models.CharField(blank=True, max_length=100)
+
+    content_panels =Page.content_panels+ [
+        FieldPanel('name',classname="full"),
+    ]
+
+class ProductFirstMenu(Page):
+    product = ParentalManyToManyField('home.ProductPage', blank=True)
+    name = models.CharField(blank=True, max_length=100)
+
+    content_panels =Page.content_panels+ [
+        FieldPanel('product'),
+        FieldPanel('name',classname="full"),
+    ]
+
+class ProductSecondMenu(Page):
+    product = ParentalManyToManyField('home.ProductFirstMenu', blank=True)
+    name = models.CharField(blank=True, max_length=100)
+
+    content_panels =Page.content_panels+ [
+        FieldPanel('product'),
+        FieldPanel('name',classname="full"),
+    ]
+
+class ProductThirdMenu(Page):
+    product = ParentalManyToManyField('home.ProductSecondMenu', blank=True)
+    images = StreamField([
+        ('image', ImageChooserBlock())
+    ], blank=True,use_json_field=True)
+    body = RichTextField(blank=True)
+
+    content_panels =Page.content_panels+ [
+        FieldPanel('product'),
+        FieldPanel('images'),
+        FieldPanel('body',classname="full"),
+    ]
+
 # class ProductPage(Page):
 #     # categories = ParentalManyToManyField('home.ProductCategory', blank=True)
 #     image = models.ForeignKey(
@@ -241,6 +284,30 @@ class ImagesPage(Page):
     images = StreamField([
         ('image', ImageChooserBlock())
     ], blank=True,use_json_field=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('images'),
+    ]
+
+class ImageBlock(StructBlock):
+    image = ImageChooserBlock(required=True)
+    caption = RichTextBlock(required=False)  # Use RichTextBlock for rich text features
+    link = URLBlock(required=False, help_text="Hyperlink to another website", max_length=255)  # Use URLBlock for URLs
+
+# Update your page model
+class ControlImages(Page):
+    images = StreamField([
+        ('image_block', ImageBlock()),  # Use the custom StructBlock
+    ], blank=True, use_json_field=True)
+
+    content_panels = Page.content_panels + [
+        FieldPanel('images'),
+    ]
+
+class RoyalImages(Page):
+    images = StreamField([
+        ('image_block', ImageBlock()),  # Use the custom StructBlock
+    ], blank=True, use_json_field=True)
 
     content_panels = Page.content_panels + [
         FieldPanel('images'),
