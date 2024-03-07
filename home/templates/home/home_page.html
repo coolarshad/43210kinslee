@@ -20,11 +20,11 @@ Delete the line below if you're just getting started and want to remove the welc
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>Kinslee Enterprises Limited - Index</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+  {% comment %} <meta content="" name="description">
+  <meta content="" name="keywords"> {% endcomment %}
 
   <!-- Favicons -->
-  <link rel="icon" type="image/x-icon" href="{% static 'assets/img/logo3.png' %}">
+  <link rel="icon" type="image/x-icon" href="{% static 'assets/img/logo2.ico' %}">
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
@@ -39,7 +39,18 @@ Delete the line below if you're just getting started and want to remove the welc
 
   <!-- Template Main CSS File -->
   <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
-
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var links = document.querySelectorAll(".check-link");
+        links.forEach(function(link) {
+            link.addEventListener("click", function(event) {
+                if (this.getAttribute("href") === "") {
+                    event.preventDefault();
+                }
+            });
+        });
+    });
+</script>
  
 </head>
 
@@ -61,9 +72,34 @@ Delete the line below if you're just getting started and want to remove the welc
           <li><a class="nav-link scrollto" href="#about">About Us</a></li>
           <li><a class="nav-link scrollto" href="#missionvision">Vision & Mission</a></li>
           <!-- <li><a class="nav-link scrollto" href="#services">Services</a></li> -->
-          <li><a class="nav-link scrollto" href="#images">Kinslee Images</a></li>
+          <li><a class="nav-link scrollto" href="#images">Finished Products</a></li>
           {% comment %} <li><a class="nav-link scrollto" href="#team">Team</a></li> {% endcomment %}
-          <li class="dropdown"><a href="#"><span>Products & Specifications</span> <i class="bi bi-chevron-down"></i></a>
+          
+          <li class="dropdown"><a href="#"><span>Products</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              {% for page in product_page %}
+              <li class="dropdown"><a href="#"><span>{{page.name}}</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                  {% for first_menu in page.productfirstmenu_set.all %}
+                    <li class="dropdown"><a href="#"><span>{{first_menu.name}}</span> <i class="bi bi-chevron-right"></i></a>
+                      <ul>
+                        {% for second_menu in first_menu.productsecondmenu_set.all %}
+                        <li class="dropdown"><a href="#"><span>{{second_menu.name}}</span> <i class="bi bi-chevron-right"></i></a>
+                          <ul>
+                            {% for third_menu in second_menu.productthirdmenu_set.all %}
+                            <li class="dropdown"><a href="{{third_menu.url}}"><span>{{third_menu.title}}</span> <i class="bi bi-chevron-right"></i></a>
+                            {%endfor%}
+                          </ul>
+                        {%endfor%}
+                      </ul>
+                  {%endfor%}
+                </ul>
+              </li>
+              {%endfor%}
+            </ul>
+          </li>
+
+          <li class="dropdown"><a href="#"><span>Specifications</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               {% for productspec in productspecification %}
                 {%if productspec.is_file%}
@@ -100,21 +136,7 @@ Delete the line below if you're just getting started and want to remove the welc
               {% endfor %}
             
             </ul>
-            <!-- <ul>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-right"></i></a>
-                <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
-                </ul>
-              </li>
-              <li><a href="#">Drop Down 2</a></li>
-              <li><a href="#">Drop Down 3</a></li>
-              <li><a href="#">Drop Down 4</a></li>
-            </ul> -->
+            
           </li>
           <!-- <li class="dropdown megamenu"><a href="#"><span>Mega Menu</span> <i class="bi bi-chevron-down"></i></a>
            
@@ -231,65 +253,40 @@ Delete the line below if you're just getting started and want to remove the welc
       <div class="container">
 
         <div class="section-title" data-aos="fade-in" data-aos-delay="100">
-          <h2>Kinslee Images</h2>
-          <!-- <p>Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p> -->
+          <h2>Finished Products</h2>
         </div>
 
-        {% comment %} <div class="row portfolio-container" data-aos="fade-up">
-          {% for image in gallery %}
-          {% for block in image.images %}
-          {% if block.block_type == 'image' %}
-              {% image block.value original format-jpeg as image_jpg %}
-              <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-                <div class="portfolio-wrap">
-                  <img src="{{image_jpg.url}}" class="img-fluid" alt="">
-                  <div class="portfolio-links">
-                    <a href="{{image_jpg.url}}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="{{image.title}}"><i class="bx bx-plus"></i></a>
-                    <!-- <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a> -->
-                  </div>
-                </div>
-              </div>
-          {% endif %}
-          {% endfor %}
-          {% endfor %}
-
-        </div> {% endcomment %}
+      
         <div class="d-flex flex-row justify-content-between flex-column flex-sm-row align-items-center">
           <div class="carousel-box">
               <div id="carouselExampleCaptions1" class="carousel slide">
                 
-                  <div class="carousel-indicators">
-                      <button type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide-to="0" class="active"
-                          aria-current="true" aria-label="Slide 1"></button>
-                      <button type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide-to="1"
-                          aria-label="Slide 2"></button>
-                      <button type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide-to="2"
-                          aria-label="Slide 3"></button>
+                 <div class="carousel-indicators">
+                  {% for image in controllubricants %}
+                      {% for block in image.images %}
+                        {% if block.block_type == 'image_block' %}
+                      <button type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"
+                          aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+                        {% endif %}
+                      {% endfor %}
+                  {% endfor %}
                   </div>
                   <div class="carousel-inner">
-                      <div class="carousel-item active">
-                        <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
-                          <img src="{% static 'assets/img/team/team-1.jpg' %}" class="d-block w-100" alt="...">
-                          <div class="carousel-caption d-none d-md-block">
-                              <h5>First slide label</h5>
-                              <p>Some representative placeholder content for the first slide.</p>
+                    {% for image in controllubricants %}
+                      {% for block in image.images %}
+                        {% if block.block_type == 'image_block' %}
+                          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <a href="{{ block.value.link }}" target="_blank" rel="noopener noreferrer" class="check-link">
+                            {% image block.value.image width-600 class="d-block w-100 h-100"%}
+                            
+                            </a>
+                            <div class="carousel-caption d-none d-md-block">
+                              <h5>{{ block.value.caption }}</h5>
+                            </div>
                           </div>
-                        </a>
-                      </div>
-                      <div class="carousel-item">
-                          <img src="{% static 'assets/img/team/team-2.jpg' %}" class="d-block w-100" alt="...">
-                          <div class="carousel-caption d-none d-md-block">
-                              <h5>Second slide label</h5>
-                              <p>Some representative placeholder content for the second slide.</p>
-                          </div>
-                      </div>
-                      <div class="carousel-item">
-                          <img src="{% static 'assets/img/team/team-1.jpg' %}" class="d-block w-100" alt="...">
-                          <div class="carousel-caption d-none d-md-block">
-                              <h5>Third slide label</h5>
-                              <p>Some representative placeholder content for the third slide.</p>
-                          </div>
-                      </div>
+                        {% endif %}
+                      {% endfor %}
+                    {% endfor %}
                   </div>
                   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions1"
                       data-bs-slide="prev">
@@ -302,42 +299,36 @@ Delete the line below if you're just getting started and want to remove the welc
                       <span class="visually-hidden">Next</span>
                   </button>
               </div>
+              <div class="p-2 fs-3 text-center fw-semibold">CONTROL LUBRICANTS</div>
           </div>
           <div class="carousel-box">
               <div id="carouselExampleCaptions2" class="carousel slide">
                   <div class="carousel-indicators">
-                      <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="0" class="active"
-                          aria-current="true" aria-label="Slide 1"></button>
-                      <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="1"
-                          aria-label="Slide 2"></button>
-                      <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="2"
-                          aria-label="Slide 3"></button>
+                    {% for image in controllubricants %}
+                    {% for block in image.images %}
+                      {% if block.block_type == 'image_block' %}
+                    <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"
+                        aria-current="true" aria-label="Slide {{ forloop.counter0 }}"></button>
+                      {% endif %}
+                    {% endfor %}
+                  {% endfor %}
                   </div>
                   <div class="carousel-inner">
-                    <div class="carousel-item active">
-                      <a href="https://github.com/" target="_blank" rel="noopener noreferrer">
-                        <img src="{% static 'assets/img/team/team-1.jpg' %}" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>First slide label</h5>
-                            <p>Some representative placeholder content for the first slide.</p>
-                        </div>
-                      </a>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'assets/img/team/team-2.jpg' %}" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Second slide label</h5>
-                            <p>Some representative placeholder content for the second slide.</p>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img src="{% static 'assets/img/team/team-1.jpg' %}" class="d-block w-100" alt="...">
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5>Third slide label</h5>
-                            <p>Some representative placeholder content for the third slide.</p>
-                        </div>
-                    </div>
-                  </div>
+                    {% for image in controllubricants %}
+                      {% for block in image.images %}
+                        {% if block.block_type == 'image_block' %}
+                          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                            <a href="{{ block.value.link }}" target="_blank" rel="noopener noreferrer" class="check-link">
+                            {% image block.value.image width-600 class="d-block w-100 h-100"%}
+                            </a>
+                            <div class="carousel-caption d-none d-md-block">
+                              <h5>{{ block.value.caption }}</h5>
+                              {% comment %} <p>Image {{ forloop.counter }} of {{ controllubricants|length }}</p> {% endcomment %}
+                            </div>
+                          </div>
+                        {% endif %}
+                      {% endfor %}
+                    {% endfor %}
                   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2"
                       data-bs-slide="prev">
                       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -349,8 +340,10 @@ Delete the line below if you're just getting started and want to remove the welc
                       <span class="visually-hidden">Next</span>
                   </button>
               </div> 
+              
           </div>
-      </div>
+          <div class="p-2 fs-3 text-center fw-semibold">CONTROL LUBRICANTS</div>
+        </div>
 
 
       </div>

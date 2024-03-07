@@ -42,6 +42,11 @@ class HomePage(Page):
         context['controllubricants']=ControlImages.objects.all()
         context['royallubricants']=RoyalImages.objects.all()
 
+        context['product_page']=ProductPage.objects.all()
+        context['product_first_menu']=ProductFirstMenu.objects.all()
+        context['product_second_menu']=ProductSecondMenu.objects.all()
+        context['product_third_menu']=ProductThirdMenu.objects.all()
+
         return context
 
 class CarouselImage(Orderable):
@@ -211,12 +216,30 @@ class ProductThirdMenu(Page):
         ('image', ImageChooserBlock())
     ], blank=True,use_json_field=True)
     body = RichTextField(blank=True)
-
+    template = 'home/portfolio-details.html'
     content_panels =Page.content_panels+ [
         FieldPanel('product'),
         FieldPanel('images'),
         FieldPanel('body',classname="full"),
     ]
+
+    def get_context(self, request):
+        context = super(ProductThirdMenu, self).get_context(request)
+        context['home'] = HomePage.objects.all().first()
+        context['image_list'] = CarouselContent.objects.all()[1:]
+        context['first_image']=CarouselContent.objects.all().first()
+        context['visionmission']=VisionMission.objects.first()
+        context['gallery'] = ImagesPage.objects.all()
+        context['teampage'] = TeamPage.objects.all().first()
+        # context['productpages']=ProductPage.objects.all()
+        context['about']=AboutPage.objects.first()
+        context['missionvision']=VisionMission.objects.first()
+        context['productspecification']=ProductSpecification.objects.all()
+        context['productdatasheet']=ProductSafetyDataSheet.objects.all()
+        context['controllubricants']=ControlImages.objects.all()
+        context['royallubricants']=RoyalImages.objects.all()
+
+        return context
 
 # class ProductPage(Page):
 #     # categories = ParentalManyToManyField('home.ProductCategory', blank=True)
