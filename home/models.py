@@ -42,10 +42,10 @@ class HomePage(Page):
         context['controllubricants']=ControlImages.objects.all()
         context['royallubricants']=RoyalImages.objects.all()
 
-        context['product_page']=ProductPage.objects.all()
-        context['product_first_menu']=ProductFirstMenu.objects.all()
-        context['product_second_menu']=ProductSecondMenu.objects.all()
-        context['product_third_menu']=ProductThirdMenu.objects.all()
+        # context['product_page']=ProductPage.objects.all()
+        # context['product_first_menu']=ProductFirstMenu.objects.all()
+        # context['product_second_menu']=ProductSecondMenu.objects.all()
+        # context['product_third_menu']=ProductThirdMenu.objects.all()
 
         return context
 
@@ -185,46 +185,50 @@ class DataSheetSecondMenu(Page):
 
 
 
-class ProductPage(Page):
-    name = models.CharField(blank=True, max_length=100)
+# class ProductPage(Page):
+#     name = models.CharField(blank=True, max_length=100)
 
-    content_panels =Page.content_panels+ [
-        FieldPanel('name',classname="full"),
-    ]
+#     content_panels =Page.content_panels+ [
+#         FieldPanel('name',classname="full"),
+#     ]
 
-class ProductFirstMenu(Page):
-    product = ParentalManyToManyField('home.ProductPage', blank=True)
-    name = models.CharField(blank=True, max_length=100)
+# class ProductFirstMenu(Page):
+#     product = ParentalManyToManyField('home.ProductPage', blank=True)
+#     name = models.CharField(blank=True, max_length=100)
 
-    content_panels =Page.content_panels+ [
-        FieldPanel('product'),
-        FieldPanel('name',classname="full"),
-    ]
+#     content_panels =Page.content_panels+ [
+#         FieldPanel('product'),
+#         FieldPanel('name',classname="full"),
+#     ]
 
-class ProductSecondMenu(Page):
-    product = ParentalManyToManyField('home.ProductFirstMenu', blank=True)
-    name = models.CharField(blank=True, max_length=100)
+# class ProductSecondMenu(Page):
+#     product = ParentalManyToManyField('home.ProductFirstMenu', blank=True)
+#     name = models.CharField(blank=True, max_length=100)
 
-    content_panels =Page.content_panels+ [
-        FieldPanel('product'),
-        FieldPanel('name',classname="full"),
-    ]
+#     content_panels =Page.content_panels+ [
+#         FieldPanel('product'),
+#         FieldPanel('name',classname="full"),
+#     ]
 
-class ProductThirdMenu(Page):
-    product = ParentalManyToManyField('home.ProductSecondMenu', blank=True)
+class ImageBlock(StructBlock):
+    image = ImageChooserBlock(required=True)
+    caption = RichTextBlock(required=False)  # Use RichTextBlock for rich text features
+
+class ControlImages(Page):
+    # product = ParentalManyToManyField('home.ProductSecondMenu', blank=True)
     images = StreamField([
-        ('image', ImageChooserBlock())
-    ], blank=True,use_json_field=True)
+        ('image_block', ImageBlock()),  # Use the custom StructBlock
+    ], blank=True, use_json_field=True)
     body = RichTextField(blank=True)
     template = 'home/portfolio-details.html'
     content_panels =Page.content_panels+ [
-        FieldPanel('product'),
+        # FieldPanel('product'),
         FieldPanel('images'),
         FieldPanel('body',classname="full"),
     ]
 
     def get_context(self, request):
-        context = super(ProductThirdMenu, self).get_context(request)
+        context = super(ControlImages, self).get_context(request)
         context['home'] = HomePage.objects.all().first()
         context['image_list'] = CarouselContent.objects.all()[1:]
         context['first_image']=CarouselContent.objects.all().first()
@@ -236,8 +240,39 @@ class ProductThirdMenu(Page):
         context['missionvision']=VisionMission.objects.first()
         context['productspecification']=ProductSpecification.objects.all()
         context['productdatasheet']=ProductSafetyDataSheet.objects.all()
-        context['controllubricants']=ControlImages.objects.all()
-        context['royallubricants']=RoyalImages.objects.all()
+        # context['controllubricants']=ControlImages.objects.all()
+        # context['royallubricants']=RoyalImages.objects.all()
+
+        return context
+    
+class RoyalImages(Page):
+    # product = ParentalManyToManyField('home.ProductSecondMenu', blank=True)
+    images = StreamField([
+        ('image_block', ImageBlock()),  # Use the custom StructBlock
+    ], blank=True, use_json_field=True)
+    body = RichTextField(blank=True)
+    template = 'home/portfolio-details.html'
+    content_panels =Page.content_panels+ [
+        # FieldPanel('product'),
+        FieldPanel('images'),
+        FieldPanel('body',classname="full"),
+    ]
+
+    def get_context(self, request):
+        context = super(ControlImages, self).get_context(request)
+        context['home'] = HomePage.objects.all().first()
+        context['image_list'] = CarouselContent.objects.all()[1:]
+        context['first_image']=CarouselContent.objects.all().first()
+        context['visionmission']=VisionMission.objects.first()
+        context['gallery'] = ImagesPage.objects.all()
+        context['teampage'] = TeamPage.objects.all().first()
+        # context['productpages']=ProductPage.objects.all()
+        context['about']=AboutPage.objects.first()
+        context['missionvision']=VisionMission.objects.first()
+        context['productspecification']=ProductSpecification.objects.all()
+        context['productdatasheet']=ProductSafetyDataSheet.objects.all()
+        # context['controllubricants']=ControlImages.objects.all()
+        # context['royallubricants']=RoyalImages.objects.all()
 
         return context
 
@@ -312,26 +347,26 @@ class ImagesPage(Page):
         FieldPanel('images'),
     ]
 
-class ImageBlock(StructBlock):
-    image = ImageChooserBlock(required=True)
-    caption = RichTextBlock(required=False)  # Use RichTextBlock for rich text features
-    link = URLBlock(required=False, help_text="Hyperlink to another website", max_length=255)  # Use URLBlock for URLs
 
-# Update your page model
-class ControlImages(Page):
-    images = StreamField([
-        ('image_block', ImageBlock()),  # Use the custom StructBlock
-    ], blank=True, use_json_field=True)
+# class ImageBlock(StructBlock):
+#     image = ImageChooserBlock(required=True)
+#     caption = RichTextBlock(required=False)  # Use RichTextBlock for rich text features
+#     link = URLBlock(required=False, help_text="Hyperlink to another website", max_length=255)  # Use URLBlock for URLs
+# # Update your page model
+# class ControlImages(Page):
+#     images = StreamField([
+#         ('image_block', ImageBlock()),  # Use the custom StructBlock
+#     ], blank=True, use_json_field=True)
 
-    content_panels = Page.content_panels + [
-        FieldPanel('images'),
-    ]
+#     content_panels = Page.content_panels + [
+#         FieldPanel('images'),
+#     ]
 
-class RoyalImages(Page):
-    images = StreamField([
-        ('image_block', ImageBlock()),  # Use the custom StructBlock
-    ], blank=True, use_json_field=True)
+# class RoyalImages(Page):
+#     images = StreamField([
+#         ('image_block', ImageBlock()),  # Use the custom StructBlock
+#     ], blank=True, use_json_field=True)
 
-    content_panels = Page.content_panels + [
-        FieldPanel('images'),
-    ]
+#     content_panels = Page.content_panels + [
+#         FieldPanel('images'),
+#     ]

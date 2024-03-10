@@ -74,7 +74,7 @@ Delete the line below if you're just getting started and want to remove the welc
           <!-- <li><a class="nav-link scrollto" href="#services">Services</a></li> -->
           <li><a class="nav-link scrollto" href="{{page.get_parent.url}}#images">Finished Products</a></li>
           {% comment %} <li><a class="nav-link scrollto" href="#team">Team</a></li> {% endcomment %}
-          <li class="dropdown"><a href="#"><span>Products & Specifications</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown"><a href="#"><span>Products Specifications</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               {% for productspec in productspecification %}
                 {%if productspec.is_file%}
@@ -167,7 +167,7 @@ Delete the line below if you're just getting started and want to remove the welc
           <div id="carouselExampleCaptions" class="carousel slide">
             <div class="carousel-indicators">
               {% for block in self.images %}
-                        {% if block.block_type == 'image' %}
+                        {% if block.block_type == 'image_block' %}
                       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"
                           aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
                         {% endif %}
@@ -175,9 +175,9 @@ Delete the line below if you're just getting started and want to remove the welc
             </div>
             <div class="carousel-inner">
               {% for block in self.images %}
-                        {% if block.block_type == 'image' %}
+                        {% if block.block_type == 'image_block' %}
                         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                          {% image block.value original class="d-block w-100 blog-carousel"%}
+                          {% image block.value.image original class="d-block w-100 blog-carousel"%}
                         </div>
               {% endif %}
               {% endfor %}

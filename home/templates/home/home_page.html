@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
 {% load static %}
+{% load static helpertags %}
 {% load wagtailimages_tags %}
 {% block body_class %}template-homepage{% endblock %}
 
@@ -75,7 +76,7 @@ Delete the line below if you're just getting started and want to remove the welc
           <li><a class="nav-link scrollto" href="#images">Finished Products</a></li>
           {% comment %} <li><a class="nav-link scrollto" href="#team">Team</a></li> {% endcomment %}
           
-          <li class="dropdown"><a href="#"><span>Products</span> <i class="bi bi-chevron-down"></i></a>
+          {% comment %} <li class="dropdown"><a href="#"><span>Products</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               {% for page in product_page %}
               <li class="dropdown"><a href="#"><span>{{page.name}}</span> <i class="bi bi-chevron-right"></i></a>
@@ -97,9 +98,9 @@ Delete the line below if you're just getting started and want to remove the welc
               </li>
               {%endfor%}
             </ul>
-          </li>
+          </li> {% endcomment %}
 
-          <li class="dropdown"><a href="#"><span>Specifications</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown"><a href="#"><span>Product Specifications</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               {% for productspec in productspecification %}
                 {%if productspec.is_file%}
@@ -263,30 +264,29 @@ Delete the line below if you're just getting started and want to remove the welc
                 
                  <div class="carousel-indicators">
                   {% for image in controllubricants %}
-                      {% for block in image.images %}
-                        {% if block.block_type == 'image_block' %}
-                      <button type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"
-                          aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
-                        {% endif %}
-                      {% endfor %}
+                  {% get_first_image image as first_image_url %}
+                  {% if first_image_url %}
+                   <button type="button" data-bs-target="#carouselExampleCaptions1" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"
+                    aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+                  {% endif %}
                   {% endfor %}
                   </div>
                   <div class="carousel-inner">
                     {% for image in controllubricants %}
-                      {% for block in image.images %}
-                        {% if block.block_type == 'image_block' %}
-                          <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                            <a href="{{ block.value.link }}" target="_blank" rel="noopener noreferrer" class="check-link">
-                            {% image block.value.image width-600 class="d-block w-100 h-100"%}
-                            
-                            </a>
-                            <div class="carousel-caption d-none d-md-block">
-                              <h5>{{ block.value.caption }}</h5>
-                            </div>
-                          </div>
-                        {% endif %}
-                      {% endfor %}
-                    {% endfor %}
+                    {% get_first_image image as first_image_url %}
+                    {% get_first_caption image as first_caption %}
+                  
+                    {% if first_image_url %}
+                      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <a href="{{image.url}}" target="_blank" rel="noopener noreferrer" class="check-link">
+                          <img src="{{ first_image_url }}" class="d-block w-100 h-100" alt="">
+                        </a>
+                        <div class="carousel-caption d-none d-md-block">
+                          <h5>{{ first_caption|safe }}</h5>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
                   </div>
                   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions1"
                       data-bs-slide="prev">
@@ -303,32 +303,32 @@ Delete the line below if you're just getting started and want to remove the welc
           </div>
           <div class="carousel-box">
               <div id="carouselExampleCaptions2" class="carousel slide">
-                  <div class="carousel-indicators">
-                    {% for image in royallubricants %}
-                    {% for block in image.images %}
-                      {% if block.block_type == 'image_block' %}
-                    <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"
-                        aria-current="true" aria-label="Slide {{ forloop.counter0 }}"></button>
-                      {% endif %}
-                    {% endfor %}
+                <div class="carousel-indicators">
+                  {% for image in royallubricants %}
+                  {% get_first_image image as first_image_url %}
+                  {% if first_image_url %}
+                   <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"
+                    aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
+                  {% endif %}
                   {% endfor %}
                   </div>
                   <div class="carousel-inner">
                     {% for image in royallubricants %}
-                      {% for block in image.images %}
-                        {% if block.block_type == 'image_block' %}
-                          <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                            <a href="{{ block.value.link }}" target="_blank" rel="noopener noreferrer" class="check-link">
-                            {% image block.value.image width-600 class="d-block w-100 h-100"%}
-                            </a>
-                            <div class="carousel-caption d-none d-md-block">
-                              <h5>{{ block.value.caption }}</h5>
-                              {% comment %} <p>Image {{ forloop.counter }} of {{ controllubricants|length }}</p> {% endcomment %}
-                            </div>
-                          </div>
-                        {% endif %}
-                      {% endfor %}
-                    {% endfor %}
+                    {% get_first_image image as first_image_url %}
+                    {% get_first_caption image as first_caption %}
+                  
+                    {% if first_image_url %}
+                      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                        <a href="{{image.url}}" target="_blank" rel="noopener noreferrer" class="check-link">
+                          <img src="{{ first_image_url }}" class="d-block w-100 h-100" alt="">
+                        </a>
+                        <div class="carousel-caption d-none d-md-block">
+                          <h5>{{ first_caption|safe }}</h5>
+                        </div>
+                      </div>
+                    {% endif %}
+                  {% endfor %}
+                  </div>
                   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2"
                       data-bs-slide="prev">
                       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -340,9 +340,9 @@ Delete the line below if you're just getting started and want to remove the welc
                       <span class="visually-hidden">Next</span>
                   </button>
               </div> 
-              
+              <div class="p-2 fs-3 text-center fw-semibold">ROYAL LUBRICANTS</div>
           </div>
-          <div class="p-2 fs-3 text-center fw-semibold">ROYAL LUBRICANTS</div>
+          
         </div>
 
 
