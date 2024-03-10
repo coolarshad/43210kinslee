@@ -304,7 +304,7 @@ Delete the line below if you're just getting started and want to remove the welc
           <div class="carousel-box">
               <div id="carouselExampleCaptions2" class="carousel slide">
                   <div class="carousel-indicators">
-                    {% for image in controllubricants %}
+                    {% for image in royallubricants %}
                     {% for block in image.images %}
                       {% if block.block_type == 'image_block' %}
                     <button type="button" data-bs-target="#carouselExampleCaptions2" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"
@@ -314,7 +314,7 @@ Delete the line below if you're just getting started and want to remove the welc
                   {% endfor %}
                   </div>
                   <div class="carousel-inner">
-                    {% for image in controllubricants %}
+                    {% for image in royallubricants %}
                       {% for block in image.images %}
                         {% if block.block_type == 'image_block' %}
                           <div class="carousel-item {% if forloop.first %}active{% endif %}">
@@ -342,7 +342,7 @@ Delete the line below if you're just getting started and want to remove the welc
               </div> 
               
           </div>
-          <div class="p-2 fs-3 text-center fw-semibold">CONTROL LUBRICANTS</div>
+          <div class="p-2 fs-3 text-center fw-semibold">ROYAL LUBRICANTS</div>
         </div>
 
 
