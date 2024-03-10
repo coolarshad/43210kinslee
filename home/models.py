@@ -259,7 +259,7 @@ class RoyalImages(Page):
     ]
 
     def get_context(self, request):
-        context = super(ControlImages, self).get_context(request)
+        context = super(RoyalImages, self).get_context(request)
         context['home'] = HomePage.objects.all().first()
         context['image_list'] = CarouselContent.objects.all()[1:]
         context['first_image']=CarouselContent.objects.all().first()
