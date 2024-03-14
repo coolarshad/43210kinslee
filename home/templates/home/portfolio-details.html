@@ -72,7 +72,32 @@ Delete the line below if you're just getting started and want to remove the welc
           <li><a class="nav-link scrollto" href="{{page.get_parent.url}}#about">About Us</a></li>
           <li><a class="nav-link scrollto" href="{{page.get_parent.url}}#missionvision">Vision & Mission</a></li>
           <!-- <li><a class="nav-link scrollto" href="#services">Services</a></li> -->
-          <li><a class="nav-link scrollto" href="{{page.get_parent.url}}#images">Finished Products</a></li>
+          {% comment %} <li><a class="nav-link scrollto" href="{{page.get_parent.url}}#images">Finished Products</a></li> {% endcomment %}
+          <li class="dropdown"><a href="#images"><span>Finished Products</span> <i class="bi bi-chevron-down"></i></a>
+            <ul>
+              <li class="dropdown"><a href="#"><span>LUBRICANTS</span> <i class="bi bi-chevron-right"></i></a>
+                <ul>
+                    <li class="dropdown"><a href="#"><span>CONTROL</span> <i class="bi bi-chevron-right"></i></a>
+                      <ul>
+                        
+                            {% for control in controllubricants %}
+                            <li class="dropdown"><a href="{{control.url}}"><span>{{control.title}}</span> <i class="bi bi-chevron-right"></i></a>
+                            {%endfor%}
+                        
+                      </ul>
+                      <li class="dropdown"><a href="#"><span>ROYAL</span> <i class="bi bi-chevron-right"></i></a>
+                        <ul>
+                        
+                          {% for royal in royallubricants %}
+                          <li class="dropdown"><a href="{{royal.url}}"><span>{{royal.title}}</span> <i class="bi bi-chevron-right"></i></a>
+                          {%endfor%}
+                      
+                    </ul>
+                </ul>
+              </li>
+             
+            </ul>
+          </li>
           {% comment %} <li><a class="nav-link scrollto" href="#team">Team</a></li> {% endcomment %}
           <li class="dropdown"><a href="#"><span>Products & Specifications</span> <i class="bi bi-chevron-down"></i></a>
             <ul>

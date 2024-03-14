@@ -73,32 +73,34 @@ Delete the line below if you're just getting started and want to remove the welc
           <li><a class="nav-link scrollto" href="#about">About Us</a></li>
           <li><a class="nav-link scrollto" href="#missionvision">Vision & Mission</a></li>
           <!-- <li><a class="nav-link scrollto" href="#services">Services</a></li> -->
-          <li><a class="nav-link scrollto" href="#images">Finished Products</a></li>
+          {% comment %} <li><a class="nav-link scrollto" href="#images">Finished Products</a></li> {% endcomment %}
           {% comment %} <li><a class="nav-link scrollto" href="#team">Team</a></li> {% endcomment %}
           
-          {% comment %} <li class="dropdown"><a href="#"><span>Products</span> <i class="bi bi-chevron-down"></i></a>
+          <li class="dropdown"><a href="#images"><span>Finished Products</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
-              {% for page in product_page %}
-              <li class="dropdown"><a href="#"><span>{{page.name}}</span> <i class="bi bi-chevron-right"></i></a>
+              <li class="dropdown"><a href="#"><span>LUBRICANTS</span> <i class="bi bi-chevron-right"></i></a>
                 <ul>
-                  {% for first_menu in page.productfirstmenu_set.all %}
-                    <li class="dropdown"><a href="#"><span>{{first_menu.name}}</span> <i class="bi bi-chevron-right"></i></a>
+                    <li class="dropdown"><a href="#"><span>CONTROL</span> <i class="bi bi-chevron-right"></i></a>
                       <ul>
-                        {% for second_menu in first_menu.productsecondmenu_set.all %}
-                        <li class="dropdown"><a href="#"><span>{{second_menu.name}}</span> <i class="bi bi-chevron-right"></i></a>
-                          <ul>
-                            {% for third_menu in second_menu.productthirdmenu_set.all %}
-                            <li class="dropdown"><a href="{{third_menu.url}}"><span>{{third_menu.title}}</span> <i class="bi bi-chevron-right"></i></a>
+                        
+                            {% for control in controllubricants %}
+                            <li class="dropdown"><a href="{{control.url}}"><span>{{control.title}}</span> <i class="bi bi-chevron-right"></i></a>
                             {%endfor%}
-                          </ul>
-                        {%endfor%}
+                        
                       </ul>
-                  {%endfor%}
+                      <li class="dropdown"><a href="#"><span>ROYAL</span> <i class="bi bi-chevron-right"></i></a>
+                        <ul>
+                        
+                          {% for royal in royallubricants %}
+                          <li class="dropdown"><a href="{{royal.url}}"><span>{{royal.title}}</span> <i class="bi bi-chevron-right"></i></a>
+                          {%endfor%}
+                      
+                    </ul>
                 </ul>
               </li>
-              {%endfor%}
+             
             </ul>
-          </li> {% endcomment %}
+          </li>
 
           <li class="dropdown"><a href="#"><span>Product & Specifications</span> <i class="bi bi-chevron-down"></i></a>
             <ul>

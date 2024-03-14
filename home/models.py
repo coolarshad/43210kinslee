@@ -240,8 +240,8 @@ class ControlImages(Page):
         context['missionvision']=VisionMission.objects.first()
         context['productspecification']=ProductSpecification.objects.all()
         context['productdatasheet']=ProductSafetyDataSheet.objects.all()
-        # context['controllubricants']=ControlImages.objects.all()
-        # context['royallubricants']=RoyalImages.objects.all()
+        context['controllubricants']=ControlImages.objects.all()
+        context['royallubricants']=RoyalImages.objects.all()
 
         return context
     
@@ -271,8 +271,8 @@ class RoyalImages(Page):
         context['missionvision']=VisionMission.objects.first()
         context['productspecification']=ProductSpecification.objects.all()
         context['productdatasheet']=ProductSafetyDataSheet.objects.all()
-        # context['controllubricants']=ControlImages.objects.all()
-        # context['royallubricants']=RoyalImages.objects.all()
+        context['controllubricants']=ControlImages.objects.all()
+        context['royallubricants']=RoyalImages.objects.all()
 
         return context
 
