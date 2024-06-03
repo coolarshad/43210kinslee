@@ -88,14 +88,14 @@ Delete the line below if you're just getting started and want to remove the welc
                             {%endfor%}
                         
                       </ul>
-                      <li class="dropdown"><a href="#"><span>ROYAL</span> <i class="bi bi-chevron-right"></i></a>
+                      {% comment %} <li class="dropdown"><a href="#"><span>ROYAL</span> <i class="bi bi-chevron-right"></i></a>
                         <ul>
                         
                           {% for royal in royallubricants %}
                           <li class="dropdown"><a href="{{royal.url}}"><span>{{royal.title}}</span> <i class="bi bi-chevron-right"></i></a>
                           {%endfor%}
                       
-                    </ul>
+                    </ul> {% endcomment %}
                 </ul>
               </li>
              
@@ -260,7 +260,7 @@ Delete the line below if you're just getting started and want to remove the welc
         </div>
 
       
-        <div class="d-flex flex-row justify-content-between flex-column flex-sm-row align-items-center">
+        <div class="d-flex flex-row justify-content-between flex-column  align-items-center">
           <div class="carousel-box">
               <div id="carouselExampleCaptions1" class="carousel slide">
                 
@@ -303,7 +303,7 @@ Delete the line below if you're just getting started and want to remove the welc
               </div>
               <div class="p-2 fs-3 text-center fw-semibold">CONTROL LUBRICANTS</div>
           </div>
-          <div class="carousel-box">
+          {% comment %} <div class="carousel-box">
               <div id="carouselExampleCaptions2" class="carousel slide">
                 <div class="carousel-indicators">
                   {% for image in royallubricants %}
@@ -343,7 +343,7 @@ Delete the line below if you're just getting started and want to remove the welc
                   </button>
               </div> 
               <div class="p-2 fs-3 text-center fw-semibold">ROYAL LUBRICANTS</div>
-          </div>
+          </div> {% endcomment %}
           
         </div>
 
